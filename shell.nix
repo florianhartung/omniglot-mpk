@@ -14,6 +14,7 @@ in
     buildInputs = with pkgs; [
       # Base dependencies
       rustup clang pkg-config
+      rust-analyzer
 
       # Dependencies of the libsodium tests:
       libsodium
