@@ -1382,7 +1382,7 @@ impl<ID: OGID> OGMPKRuntime<ID> {
         // Allocate new heap pages for the library's malloc to use:
         //
         // 32GB, should be good for now :)
-        let foreign_heap_size = 128 * 1024 * 1024 * 1024;
+        let foreign_heap_size = 64 * 1024 * 1024 * 1024;
         debug!(
             "{} Allocating heap pages for foreign code, {} MB",
             log_prefix,
@@ -1409,8 +1409,10 @@ impl<ID: OGID> OGMPKRuntime<ID> {
             )
         } as *mut ();
 
+        let errno = unsafe { *libc::__errno_location() };
+
         if foreign_heap_start == MAP_FAILED as *mut () {
-            panic!("Failed mmapping heap memory! {:p}", foreign_heap_start);
+            panic!("Failed mmapping heap memory! errno={errno:?} foreign_heap_start={:p}", foreign_heap_start);
         }
         let foreign_heap_end = unsafe { foreign_heap_start.byte_add(foreign_heap_size) };
 

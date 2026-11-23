@@ -63,7 +63,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     omniglot::id::lifetime::OGLifetimeBranding::new(|brand| {
         with_mpkrt_lib(brand, |lib, mut alloc, mut access| {
             let mut group = c.benchmark_group("libsodium_hash");
-            for size in (0..).map(|n| 8usize.pow(n)).skip(2).take(4) {
+            for size in [4, 64, 32768] {
                 // for size in [4096_usize] {
                 let to_hash = (&mut prng)
                     .sample_iter(Uniform::new_inclusive(u8::MIN, u8::MAX))

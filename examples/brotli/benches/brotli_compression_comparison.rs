@@ -36,7 +36,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
         with_mpkrt_lib(brand, |lib, mut alloc, mut access| {
             let mut group = c.benchmark_group("brotli_compress_decompress");
 
-            for size in [8, 64, 128, 256, 512, 1024] {
+            for size in [8, 1024, 2048] {
                 let tput_bytes: u64 = size as u64;
 
                 group.throughput(Throughput::Bytes(tput_bytes as u64));
